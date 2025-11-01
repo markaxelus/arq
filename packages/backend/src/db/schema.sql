@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
   token_expiry TIMESTAMP,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+);
 
 -- Goals Table
 CREATE TABLE IF NOT EXISTS goals (
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS goals (
   active BOOLEAN DEFAULT 1,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-)
+);
 
 -- Preferences Table
 CREATE TABLE IF NOT EXISTS preferences (
@@ -33,23 +33,49 @@ CREATE TABLE IF NOT EXISTS preferences (
  block_length TEXT NOT NULL,
  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-)
+);
 
 -- Fixed Commitments Table
 CREATE TABLE IF NOT EXISTS fixed_commitments (
-  
-)
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  username TEXT NOT NULL,
+  days_of_week INTEGER NOT NULL,
+  start_time TEXT NOT NULL,
+  end_time TEXT NOT NULL,
+  google_event_id TEXT,
+  recurring BOOLEAN DEFAULT 1,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
 
--- Scheduled Table
-CREATE TABLE IF NOT EXISTS scheduled (
-  
-)
+-- Scheduled Blocsk Table
+CREATE TABLE IF NOT EXISTS scheduled_blocks (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  goal_id TEXT NOT NULL,
+  google_event_id TEXT,
+  start_time TIMESTAMP NOT NULL,
+  end_time TIMESTAMP NOT NULL,
+  status TEXT NOT NULL DEFAULT 'scheduled',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (goal_id) REFERENCES goals(id) ON DELETE CASCADE
+);
 
 -- Messages Table (Gmail)
 
 
 -- Sync Status Table
 CREATE TABLE IF NOT EXISTS sync_status (
-  
-)
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  service TEXT NOT NULL,
+  last_sync_at TIMESTAMP,
+  next_sync_at TIMESTAMP,
+  sync_errors TEXT,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 -- Indexes 
