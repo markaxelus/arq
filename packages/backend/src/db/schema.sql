@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY,
   email TEXT UNIQUE NOT NULL,
-  userame TEXT,
+  username TEXT,
   google_access_token TEXT,
   google_refresh_token TEXT,
   token_expiry TIMESTAMP,
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Goals Table
+-- Goals TableWH
 CREATE TABLE IF NOT EXISTS goals (
   id TEXT PRIMARY KEY,
   user_id TEXT NOT NULL,

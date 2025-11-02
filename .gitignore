@@ -4,3 +4,4 @@ node_modules
 .vs
 .claude
 .pnpm-store
+*.db
