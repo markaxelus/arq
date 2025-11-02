@@ -1,13 +1,14 @@
-version: '3.8'
-
 services:
   backend:
-    image: node:20-alpine
+    build: .
     working_dir: /app
     volumes:
       - .:/app
-    command: sh -c "corepack enable && pnpm install && cd packages/backend && pnpm tsx src/db/database.ts"
+      - /app/node_modules
+      - /app/packages/backend/node_modules
+    command: sh -c "pnpm install && pnpm rebuild better-sqlite3 && tail -f /dev/null"
     ports:
       - "3000:3001"
     environment:
       - NODE_ENV=development
+      - CI=true

@@ -8,7 +8,8 @@
     "dev": "pnpm --filter desktop tauri dev",
     "dev:backend": "pnpm --filter backend dev",
     "build": "pnpm --filter desktop tauri build",
-    "lint": "pnpm -r lint"
+    "lint": "pnpm -r lint",
+    "db": "docker compose exec backend sh -c \"cd packages/backend && pnpm exec tsx src/db/database.ts\""
   },
   "keywords": [],
   "author": "",
